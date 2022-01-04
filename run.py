@@ -104,6 +104,21 @@ def get_last_5_entries_sales():
     
     return columns
 
+def calculate_stock_data(data):
+    """
+    Calculate the average stock for each item typem adding 10%
+    """
+
+    print("Calculating stock data...\n")
+    new_stock_data = [] #create an empty list to store 
+
+    for column in data: # loop through all columns in our data
+        int_column = [int(num) for num in column] # change each number in the list to integer as we need to do mathematical calc
+        average = sum(int_column) / len(int_column)
+        stock_num = average * 1.1 # add 10%
+        new_stock_data.append(round(stock_num)) #round
+    
+    return new_stock_data #return value and give it a place to be where it's called
 
 def main():
     """
@@ -114,7 +129,10 @@ def main():
     update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data, "surplus")
+    sales_columns = get_last_5_entries_sales()
+    stock_data = calculate_stock_data(sales_columns)
+    update_worksheet(stock_data, "stock")
 
 print("Welcome to Love Sandwiches Data Automation")
-# main()
-get_last_5_entries_sales()
+main()
+
